@@ -1,372 +1,1219 @@
-<!DOCTYPE html>
+<!doctype html>
+
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>Campus Placement Management System</title>
-
-<script src="https://cdn.tailwindcss.com"></script>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
-
+<title>CampusConnect | Placement Management</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;scroll-behavior:smooth}
-:root{--navy:#0f172a;--navy2:#172554;--blue:#2563eb;--blue2:#1d4ed8;--light:#f1f5f9}
-body{background:var(--light);color:#0f172a;transition:.3s}
-.hero{background:linear-gradient(135deg,var(--navy),var(--navy2),var(--blue))}
-.glow{box-shadow:0 0 30px rgba(37,99,235,.35)}
-nav{background:rgba(255,255,255,.96)!important;backdrop-filter:blur(12px)}
-nav a{transition:.2s}
-#darkBtn{background:var(--navy)!important}
-body.dark-mode{background:#020617;color:#e2e8f0}
-body.dark-mode nav{background:rgba(15,23,42,.97)!important;color:#e2e8f0}
-body.dark-mode nav a{color:#cbd5e1}
-body.dark-mode nav a:hover{color:#60a5fa}
-body.dark-mode #mobileMenu{background:#0f172a!important;border-color:#1e293b}
-body.dark-mode #mobileMenu a{color:#cbd5e1}
-body.dark-mode section.bg-white{background:#0f172a!important}
-body.dark-mode section.bg-gray-100,body.dark-mode section.bg-gray-50{background:#111827!important}
-body.dark-mode .bg-white{background:#111827!important;color:#e2e8f0}
-body.dark-mode .bg-gray-100{background:#1e293b!important}
-body.dark-mode .bg-blue-50{background:#172554!important}
-body.dark-mode .text-gray-800{color:#f8fafc!important}
-body.dark-mode .text-gray-600,body.dark-mode .text-gray-500,body.dark-mode .text-gray-400{color:#94a3b8!important}
-body.dark-mode input,body.dark-mode textarea{background:#0f172a!important;color:#f8fafc!important;border-color:#334155!important}
-body.dark-mode input::placeholder,body.dark-mode textarea::placeholder{color:#64748b}
-body.dark-mode footer{background:#020617!important}
-body.dark-mode #loader{background:#0f172a!important}
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root{
+--bg:#f6f8fc;
+--card:#ffffff;
+--text:#111827;
+--muted:#64748b;
+--line:#e2e8f0;
+--primary:#4f46e5;
+--primary2:#7c3aed;
+--soft:#eef2ff;
+--nav:#ffffff;
+--shadow:0 18px 50px #0f172a12;
+}
+
+*{
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+margin:0;
+font-family:'Plus Jakarta Sans',Inter,Segoe UI,Arial,sans-serif;
+background:var(--bg);
+color:var(--text);
+}
+
+body.dark{
+--bg:#070b16;
+--card:#0f172a;
+--text:#f8fafc;
+--muted:#94a3b8;
+--line:#1e293b;
+--soft:#151b35;
+--nav:#0b1120;
+--shadow:0 18px 50px #0005;
+}
+
+button,a,input,select,textarea{
+font:inherit;
+}
+
+button{
+cursor:pointer;
+border:0;
+}
+
+a{
+text-decoration:none;
+color:inherit;
+}
+
+.container{
+width:min(1180px,92%);
+margin:auto;
+}
+
+/* NAVBAR */
+
+.nav{
+height:72px;
+background:#ffffffee;
+position:sticky;
+top:0;
+z-index:20;
+border-bottom:1px solid var(--line);
+backdrop-filter:blur(14px);
+}
+
+body.dark .nav{
+background:#070b16ee;
+}
+
+.navin{
+height:100%;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:20px;
+}
+
+.brand{
+display:flex;
+align-items:center;
+gap:11px;
+font-weight:900;
+font-size:19px;
+}
+
+.logo{
+width:40px;
+height:40px;
+border-radius:13px;
+background:linear-gradient(135deg,#312e81,#6366f1);
+display:grid;
+place-items:center;
+color:#fff;
+font-weight:900;
+}
+
+.links{
+display:flex;
+gap:25px;
+color:var(--muted);
+font-size:14px;
+font-weight:700;
+}
+
+.links a:hover{
+color:var(--primary);
+}
+
+.actions{
+display:flex;
+gap:9px;
+align-items:center;
+}
+
+.btn{
+padding:11px 17px;
+border-radius:12px;
+font-weight:800;
+font-size:14px;
+}
+
+.primary{
+background:var(--primary);
+color:white;
+}
+
+.primary:hover{
+background:#4338ca;
+}
+
+.outline{
+border:1px solid var(--line);
+background:var(--card);
+color:var(--text);
+}
+
+.icon{
+width:42px;
+height:42px;
+border:1px solid var(--line);
+background:var(--card);
+color:var(--text);
+border-radius:12px;
+}
+
+/* HERO */
+
+.hero{
+background:linear-gradient(135deg,#eaf1ff,#eef2ff 55%,#f8faff);
+color:#111827;
+}
+
+body.dark .hero{
+background:linear-gradient(135deg,#111827,#312e81 55%,#4f46e5);
+color:#fff;
+}
+
+.heroGrid{
+padding:92px 0;
+display:grid;
+grid-template-columns:1.15fr .85fr;
+gap:55px;
+align-items:center;
+}
+
+.pill{
+display:inline-block;
+border:1px solid #c7d2fe;
+background:#ffffffaa;
+border-radius:30px;
+padding:8px 13px;
+font-size:11px;
+font-weight:900;
+letter-spacing:1.5px;
+color:#4f46e5;
+}
+
+.hero h1{
+font-size:clamp(42px,6vw,72px);
+line-height:1.02;
+margin:20px 0 18px;
+letter-spacing:-3px;
+}
+
+.hero h1 span{
+color:#4f46e5;
+}
+
+.hero p{
+font-size:17px;
+line-height:1.8;
+color:#475569;
+max-width:650px;
+}
+
+body.dark .hero p{
+color:#dbeafe;
+}
+
+.heroBtns{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin-top:28px;
+}
+
+.white{
+background:#fff;
+color:#3730a3;
+}
+
+.ghost{
+background:#ffffffaa;
+color:#3730a3;
+border:1px solid #c7d2fe;
+}
+
+.stats{
+display:flex;
+gap:35px;
+margin-top:45px;
+}
+
+.stats b{
+font-size:26px;
+}
+
+.stats small{
+display:block;
+color:#64748b;
+margin-top:5px;
+}
+
+body.dark .stats small{
+color:#c7d2fe;
+}
+
+/* PREVIEW */
+
+.preview{
+background:#ffffff;
+border:1px solid #dbe3f5;
+border-radius:28px;
+padding:18px;
+box-shadow:0 25px 70px #4f46e51c;
+}
+
+body.dark .preview{
+background:#ffffff14;
+border:1px solid #ffffff25;
+box-shadow:0 25px 70px #0005;
+}
+
+.previewTop{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:10px;
+}
+
+.live{
+background:#dcfce7;
+color:#15803d;
+border-radius:20px;
+padding:6px 10px;
+font-size:10px;
+font-weight:900;
+}
+
+.metric{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+margin-top:10px;
+}
+
+.metric div{
+background:#f8fafc;
+color:#111827;
+border-radius:18px;
+padding:22px;
+}
+
+.metric span{
+font-size:12px;
+color:#64748b;
+}
+
+.metric b{
+display:block;
+font-size:30px;
+margin-top:8px;
+}
+
+.wide{
+grid-column:1/-1;
+background:linear-gradient(135deg,#4f46e5,#7c3aed)!important;
+color:white!important;
+}
+
+/* SECTIONS */
+
+.section{
+padding:85px 0;
+}
+
+.center{
+text-align:center;
+}
+
+.eyebrow{
+color:var(--primary);
+font-size:11px;
+font-weight:900;
+letter-spacing:1.7px;
+text-transform:uppercase;
+}
+
+.section h2{
+font-size:40px;
+letter-spacing:-1.5px;
+margin:10px 0;
+}
+
+.lead{
+color:var(--muted);
+line-height:1.8;
+max-width:720px;
+}
+
+.center .lead{
+margin:0 auto;
+}
+
+.about{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:60px;
+align-items:center;
+}
+
+.aboutBox{
+background:var(--card);
+border:1px solid var(--line);
+padding:28px;
+border-radius:24px;
+box-shadow:var(--shadow);
+}
+
+.features{
+background:#eef2f7;
+}
+
+body.dark .features{
+background:#0b1120;
+}
+
+.grid3{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:18px;
+margin-top:40px;
+}
+
+.card{
+background:var(--card);
+border:1px solid var(--line);
+border-radius:21px;
+padding:25px;
+box-shadow:var(--shadow);
+}
+
+.card .ico{
+font-size:29px;
+}
+
+.card h3{
+margin:17px 0 7px;
+}
+
+.card p{
+margin:0;
+color:var(--muted);
+line-height:1.65;
+font-size:14px;
+}
+
+/* RECRUITERS */
+
+.recruiters{
+display:grid;
+grid-template-columns:repeat(6,1fr);
+gap:13px;
+margin-top:35px;
+}
+
+.company{
+border:1px solid var(--line);
+background:var(--card);
+border-radius:18px;
+padding:22px 10px;
+text-align:center;
+transition:.2s;
+}
+
+.company:hover{
+transform:translateY(-4px);
+border-color:#6366f1;
+box-shadow:var(--shadow);
+}
+
+.companyIcon{
+width:50px;
+height:50px;
+border-radius:15px;
+background:var(--soft);
+color:var(--primary);
+display:grid;
+place-items:center;
+margin:auto;
+font-weight:900;
+font-size:20px;
+}
+
+.company small{
+display:block;
+color:var(--muted);
+margin-top:8px;
+}
+
+/* CONTACT */
+
+.contact{
+background:linear-gradient(135deg,#111827,#312e81);
+color:white;
+}
+
+.contactGrid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:35px;
+}
+
+.contactBox{
+background:#ffffff12;
+border:1px solid #ffffff20;
+border-radius:25px;
+padding:30px;
+}
+
+/* FOOTER */
+
+.footer{
+text-align:center;
+padding:28px;
+color:var(--muted);
+font-size:13px;
+line-height:1.8;
+}
+
+.footer .developer{
+color:#4f46e5;
+font-weight:900;
+font-size:14px;
+}
+
+/* MODAL */
+
+.modal{
+position:fixed;
+inset:0;
+background:#020617aa;
+display:grid;
+place-items:center;
+padding:18px;
+z-index:50;
+}
+
+.modalBox{
+width:min(440px,100%);
+background:var(--card);
+border-radius:25px;
+padding:28px;
+box-shadow:0 30px 90px #0007;
+max-height:92vh;
+overflow:auto;
+}
+
+.modalHead{
+display:flex;
+justify-content:space-between;
+gap:15px;
+}
+
+.close{
+background:none;
+color:var(--muted);
+font-size:27px;
+}
+
+.tabs{
+display:grid;
+grid-template-columns:1fr 1fr;
+background:var(--soft);
+padding:4px;
+border-radius:12px;
+margin:20px 0;
+}
+
+.tabs button{
+padding:10px;
+border-radius:9px;
+background:none;
+color:var(--muted);
+font-weight:800;
+}
+
+.tabs .active{
+background:var(--card);
+color:var(--text);
+box-shadow:0 2px 8px #00000010;
+}
+
+.field{
+width:100%;
+padding:13px 14px;
+border:1px solid var(--line);
+border-radius:12px;
+background:var(--bg);
+color:var(--text);
+outline:0;
+margin-bottom:12px;
+}
+
+.field:focus{
+border-color:#6366f1;
+box-shadow:0 0 0 3px #6366f122;
+}
+
+.note{
+font-size:12px;
+color:var(--muted);
+line-height:1.6;
+}
+
+.message{
+padding:11px 13px;
+border-radius:11px;
+background:#fee2e2;
+color:#991b1b;
+font-size:13px;
+margin-bottom:12px;
+}
+
+.success{
+background:#dcfce7;
+color:#166534;
+}
+
+/* DASHBOARD */
+
+.dash{
+min-height:100vh;
+background:var(--bg);
+}
+
+.dashnav{
+background:#0b1020;
+color:#fff;
+width:255px;
+position:fixed;
+inset:0 auto 0 0;
+padding:25px 16px;
+overflow-y:auto;
+}
+
+.dashmain{
+margin-left:255px;
+padding:35px;
+}
+
+.dashlinks button{
+display:block;
+width:100%;
+text-align:left;
+padding:12px 14px;
+margin:4px 0;
+border-radius:11px;
+background:none;
+color:#cbd5e1;
+font-weight:700;
+transition:.2s;
+}
+
+.dashlinks button.active,
+.dashlinks button:hover{
+background:#4f46e5;
+color:white;
+}
+
+.dashCard{
+background:var(--card);
+border:1px solid var(--line);
+border-radius:18px;
+padding:22px;
+box-shadow:var(--shadow);
+}
+
+.dashGrid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+}
+
+.dashActionGrid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:16px;
+margin-top:20px;
+}
+
+.dashFeature{
+background:var(--card);
+border:1px solid var(--line);
+border-radius:18px;
+padding:22px;
+transition:.2s;
+cursor:pointer;
+}
+
+.dashFeature:hover{
+transform:translateY(-3px);
+border-color:#6366f1;
+box-shadow:var(--shadow);
+}
+
+.dashFeatureIcon{
+width:48px;
+height:48px;
+display:grid;
+place-items:center;
+border-radius:14px;
+background:var(--soft);
+font-size:23px;
+margin-bottom:14px;
+}
+
+.featureBtn{
+margin-top:15px;
+padding:9px 12px;
+border-radius:10px;
+background:var(--soft);
+color:var(--primary);
+font-size:12px;
+font-weight:800;
+}
+
+.searchBox{
+display:flex;
+gap:10px;
+margin:20px 0;
+}
+
+.searchBox .field{
+margin:0;
+}
+
+.dataTable{
+width:100%;
+border-collapse:collapse;
+margin-top:18px;
+}
+
+.dataTable th,
+.dataTable td{
+padding:13px 10px;
+border-bottom:1px solid var(--line);
+text-align:left;
+font-size:13px;
+}
+
+.dataTable th{
+color:var(--muted);
+font-size:11px;
+text-transform:uppercase;
+letter-spacing:.5px;
+}
+
+.status{
+display:inline-block;
+padding:5px 9px;
+border-radius:20px;
+background:#dcfce7;
+color:#166534;
+font-size:10px;
+font-weight:800;
+}
+
+.status.blue{
+background:#dbeafe;
+color:#1d4ed8;
+}
+
+.status.yellow{
+background:#fef3c7;
+color:#92400e;
+}
+
+.status.red{
+background:#fee2e2;
+color:#991b1b;
+}
+
+.actionRow{
+display:flex;
+gap:8px;
+flex-wrap:wrap;
+margin-top:18px;
+}
+
+.smallBtn{
+padding:8px 11px;
+border-radius:9px;
+font-size:11px;
+font-weight:800;
+background:var(--soft);
+color:var(--primary);
+}
+
+.smallBtn.primaryBtn{
+background:var(--primary);
+color:#fff;
+}
+
+.emptyState{
+text-align:center;
+padding:40px 20px;
+color:var(--muted);
+}
+
+.hide{
+display:none!important;
+}
+
+/* PROFILE */
+
+.profileHeader{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:15px;
+margin-bottom:25px;
+}
+
+.profileCards{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+}
+
+.profileCard{
+background:var(--card);
+border:1px solid var(--line);
+border-radius:20px;
+padding:22px;
+transition:.2s;
+}
+
+.profileCard:hover{
+transform:translateY(-3px);
+border-color:#6366f1;
+box-shadow:var(--shadow);
+}
+
+.profileIcon{
+width:48px;
+height:48px;
+border-radius:14px;
+background:var(--soft);
+display:grid;
+place-items:center;
+font-size:22px;
+margin-bottom:15px;
+}
+
+.profileCard h3{
+margin:0 0 7px;
+}
+
+.profileCard p{
+color:var(--muted);
+font-size:13px;
+line-height:1.6;
+min-height:42px;
+}
+
+.profileCard button{
+background:var(--soft);
+color:var(--primary);
+padding:9px 12px;
+border-radius:10px;
+font-weight:800;
+font-size:12px;
+}
+
+/* TOAST */
+
+.toast{
+position:fixed;
+right:25px;
+bottom:25px;
+z-index:100;
+background:#166534;
+color:white;
+padding:15px 20px;
+border-radius:14px;
+box-shadow:0 20px 50px #0005;
+font-size:13px;
+font-weight:700;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1000px){
+
+.recruiters{
+grid-template-columns:repeat(3,1fr);
+}
+
+.dashActionGrid{
+grid-template-columns:1fr 1fr;
+}
+
+}
+
+@media(max-width:900px){
+
+.links{
+display:none;
+}
+
+.heroGrid,
+.about,
+.contactGrid{
+grid-template-columns:1fr;
+}
+
+.grid3{
+grid-template-columns:1fr 1fr;
+}
+
+.dashnav{
+display:none;
+}
+
+.dashmain{
+margin:0;
+padding:20px;
+}
+
+.dashGrid{
+grid-template-columns:1fr 1fr;
+}
+
+}
+
+@media(max-width:800px){
+
+.profileCards{
+grid-template-columns:1fr 1fr;
+}
+
+}
+
+@media(max-width:600px){
+
+.heroGrid{
+padding:65px 0;
+}
+
+.hero h1{
+letter-spacing:-2px;
+}
+
+.grid3{
+grid-template-columns:1fr;
+}
+
+.recruiters{
+grid-template-columns:repeat(2,1fr);
+}
+
+.stats{
+gap:18px;
+}
+
+.actions .login{
+display:none;
+}
+
+.section{
+padding:65px 0;
+}
+
+.section h2{
+font-size:31px;
+}
+
+.dashGrid,
+.dashActionGrid{
+grid-template-columns:1fr;
+}
+
+.dashmain{
+padding:15px;
+}
+
+.searchBox{
+flex-direction:column;
+}
+
+.dataTable{
+font-size:11px;
+}
+
+.profileCards{
+grid-template-columns:1fr;
+}
+
+.profileHeader{
+align-items:flex-start;
+flex-direction:column;
+}
+
+}
+
 </style>
 
-
-
-<style id="full-campus-theme">
-:root{--navy:#0f172a;--navy2:#172554;--blue:#2563eb;--blue2:#1d4ed8;--page:#eef4ff}
-body{background:var(--page)!important;color:#0f172a;transition:background .3s,color .3s}
-nav{background:#fff!important;border-bottom:1px solid #dbe4f0}
-nav a{color:#334155!important} nav a:hover{color:#2563eb!important}
-.hero{background:linear-gradient(135deg,#0f172a,#172554 55%,#2563eb)!important}
-.bg-blue-700{background:#172554!important}.bg-blue-600{background:#2563eb!important}
-.hover\:bg-blue-700:hover{background:#1d4ed8!important}
-.text-blue-600,.text-blue-700{color:#2563eb!important}
-.border-blue-600{border-color:#2563eb!important}
-section.bg-white{background:#fff!important}
-section.bg-gray-100,section.bg-gray-50{background:#f1f5f9!important}
-.bg-blue-50{background:#eaf2ff!important}
-.from-blue-700{--tw-gradient-from:#0f172a var(--tw-gradient-from-position)!important}
-.to-indigo-700{--tw-gradient-to:#2563eb var(--tw-gradient-to-position)!important}
-#mobileMenu{background:#fff!important}
-#darkBtn{background:#0f172a!important;color:#fff!important}
-#topBtn{background:#2563eb!important}
-body.dark-mode{background:#070d1a!important;color:#e2e8f0!important}
-body.dark-mode nav{background:#0f172a!important;border-color:#1e293b!important}
-body.dark-mode nav a{color:#cbd5e1!important}
-body.dark-mode nav a:hover{color:#60a5fa!important}
-body.dark-mode #mobileMenu{background:#0f172a!important;border-color:#1e293b!important}
-body.dark-mode #mobileMenu a{color:#cbd5e1!important}
-body.dark-mode section.bg-white,body.dark-mode section.bg-gray-100,body.dark-mode section.bg-gray-50{background:#0f172a!important;color:#e2e8f0!important}
-body.dark-mode .bg-white{background:#111827!important;color:#e2e8f0!important}
-body.dark-mode .bg-gray-100,body.dark-mode .bg-gray-50{background:#172033!important}
-body.dark-mode .bg-blue-50{background:#172554!important}
-body.dark-mode .text-gray-800{color:#f8fafc!important}
-body.dark-mode .text-gray-600{color:#cbd5e1!important}
-body.dark-mode .text-gray-500,body.dark-mode .text-gray-400{color:#94a3b8!important}
-body.dark-mode input,body.dark-mode textarea{background:#020617!important;color:#f8fafc!important;border-color:#334155!important}
-body.dark-mode input::placeholder,body.dark-mode textarea::placeholder{color:#64748b!important}
-body.dark-mode footer.bg-gray-900{background:#020617!important}
-body.dark-mode #loader{background:#0f172a!important}
-body.dark-mode #darkBtn{background:#f8fafc!important;color:#0f172a!important}
-body.dark-mode .shadow,body.dark-mode .shadow-lg,body.dark-mode .shadow-2xl{box-shadow:0 12px 30px rgba(0,0,0,.35)!important}
-</style>
 </head>
 
 <body>
 
-<!-- Loader -->
+<div id="root"></div>
 
-<div id="loader"
-class="fixed inset-0 bg-white flex items-center justify-center z-50">
+<!-- FIREBASE -->
 
-<div class="animate-spin rounded-full h-16 w-16 border-4 border-blue-600 border-t-transparent">
-</div>
+<script type="module">
 
-</div>
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 
-<!-- Navbar -->
+import {
+getAuth,
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword,
+signOut,
+onAuthStateChanged,
+sendPasswordResetEmail
+}
+from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
-<nav class="fixed top-0 left-0 w-full bg-white shadow-lg z-50">
+import {
+getFirestore,
+doc,
+setDoc,
+getDoc,
+collection,
+addDoc,
+query,
+where,
+getDocs,
+serverTimestamp
+}
+from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
-<div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
+const firebaseConfig={
+apiKey:"AIzaSyBQ9iTwZRVeIbi8WMU88zgWYoWDSKE-A3o",
+authDomain:"campus-placement11.firebaseapp.com",
+projectId:"campus-placement11",
+storageBucket:"campus-placement11.firebasestorage.app",
+messagingSenderId:"301882322956",
+appId:"1:301882322956:web:f67f608654bdc8852fbe29"
+};
 
-<div class="text-2xl font-bold text-blue-700">
+const firebaseApp=initializeApp(firebaseConfig);
+const auth=getAuth(firebaseApp);
+const db=getFirestore(firebaseApp);
 
-<i class="fa-solid fa-graduation-cap"></i>
+window.CampusFirebase={
+auth,
+db,
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword,
+signOut,
+onAuthStateChanged,
+sendPasswordResetEmail,
+doc,
+setDoc,
+getDoc,
+collection,
+addDoc,
+query,
+where,
+getDocs,
+serverTimestamp
+};
 
-Campus Placement
+</script>
 
-</div>
+<script>
 
-<ul class="hidden md:flex gap-8 font-medium">
+const root=document.getElementById('root');
 
-<li><a href="#">Home</a></li>
+let dark=localStorage.getItem('theme')==='dark';
+let authMode='login';
+let currentUser=null;
+let currentRole=null;
 
-<li><a href="#about">About</a></li>
+if(dark){
+document.body.classList.add('dark');
+}
 
-<li><a href="#features">Features</a></li>
+/* COMPANY LINKS */
 
-<li><a href="#recruiters">Recruiters</a></li>
+const companies=[
+['T','TCS','https://www.tcs.com/'],
+['I','Infosys','https://www.infosys.com/'],
+['A','Accenture','https://www.accenture.com/'],
+['D','Deloitte','https://www.deloitte.com/'],
+['W','Wipro','https://www.wipro.com/'],
+['C','Capgemini','https://www.capgemini.com/']
+];
 
-<li><a href="#contact">Contact</a></li>
+/* DARK MODE */
 
-</ul>
+function toggle(){
 
-<div class="hidden md:flex gap-3">
+dark=!dark;
 
-<a href="auth/login.html"
-class="px-5 py-2 rounded-lg border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition">
+document.body.classList.toggle('dark',dark);
+
+localStorage.theme=dark?'dark':'light';
+
+}
+
+/* NAVBAR */
+
+function nav(){
+
+return `
+
+<header class="nav">
+
+<div class="container navin">
+
+<a class="brand" href="#" onclick="goHome()">
+
+<span class="logo">C</span>
+
+Campus
+<span style="color:#4f46e5;margin-left:-8px">Connect</span>
+
+</a>
+
+<nav class="links">
+
+<a href="#about">About</a>
+<a href="#features">Features</a>
+<a href="#recruiters">Recruiters</a>
+<a href="#contact">Contact</a>
+
+</nav>
+
+<div class="actions">
+
+<button class="icon" onclick="toggle()">☾</button>
+
+<button class="btn outline login" onclick="openAuth('login')">
 Login
-</a>
+</button>
 
-<a href="auth/register.html"
-class="px-5 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition">
-Register
-</a>
-
-</div>
-
-<button id="menuBtn"
-class="md:hidden text-2xl">
-
-<i class="fa-solid fa-bars"></i>
-
+<button class="btn primary" onclick="openAuth('register')">
+Get Started
 </button>
 
 </div>
 
-<!-- Mobile Menu -->
-
-<div id="mobileMenu"
-class="hidden bg-white border-t shadow-lg">
-
-<a href="#" class="block p-4 hover:bg-gray-100">
-Home
-</a>
-
-<a href="#about" class="block p-4 hover:bg-gray-100">
-About
-</a>
-
-<a href="#features" class="block p-4 hover:bg-gray-100">
-Features
-</a>
-
-<a href="#recruiters" class="block p-4 hover:bg-gray-100">
-Recruiters
-</a>
-
-<a href="#contact" class="block p-4 hover:bg-gray-100">
-Contact
-</a>
-
-<a href="auth/login.html" class="block p-4 text-blue-600">
-Login
-</a>
-
-<a href="auth/register.html" class="block p-4 text-blue-600">
-Register
-</a>
-
 </div>
 
-</nav>
+</header>
 
-<!-- Hero Section -->
+`;
 
-<section class="hero min-h-screen flex items-center pt-20">
+}
 
-<div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-10 items-center">
+/* HOME */
 
-<div class="text-white">
+function home(){
 
-<h1 class="text-5xl lg:text-6xl font-bold leading-tight">
+return `
 
-Campus Placement
+${nav()}
 
-Management System
+<section class="hero">
 
+<div class="container heroGrid">
+
+<div>
+
+<span class="pill">
+SMART • CONNECTED • PLACEMENT READY
+</span>
+
+<h1>
+Turn campus talent into
+<span>career opportunities.</span>
 </h1>
 
-<p class="mt-6 text-lg text-blue-100">
-
-A complete platform connecting students,
-companies and administrators
-for seamless campus recruitment.
-
+<p>
+A professional placement platform for students,
+recruiters and administrators — from the first
+application to final selection.
 </p>
 
-<div class="mt-8 flex flex-wrap gap-4">
+<div class="heroBtns">
 
-<a href="auth/student-register.html"
-class="bg-white text-blue-700 px-8 py-4 rounded-lg font-semibold hover:scale-105 transition">
+<button class="btn white" onclick="openAuth('register')">
+Create Account →
+</button>
 
-Get Started
-
-</a>
-
-<a href="#features"
-class="border border-white px-8 py-4 rounded-lg hover:bg-white hover:text-blue-700 transition">
-
-Explore Features
-
+<a class="btn ghost" href="#features">
+Explore Platform
 </a>
 
 </div>
 
-<div class="grid grid-cols-3 gap-6 mt-12">
+<div class="stats">
 
 <div>
-
-<h2 class="text-3xl font-bold">
-
-500+
-
-</h2>
-
-<p>
-
-Students
-
-</p>
-
+<b>3</b>
+<small>User Roles</small>
 </div>
 
 <div>
-
-<h2 class="text-3xl font-bold">
-
-120+
-
-</h2>
-
-<p>
-
-Companies
-
-</p>
-
+<b>24/7</b>
+<small>Access</small>
 </div>
 
 <div>
-
-<h2 class="text-3xl font-bold">
-
-95%
-
-</h2>
-
-<p>
-
-Placement
-
-</p>
-
+<b>1</b>
+<small>Unified Platform</small>
 </div>
 
 </div>
 
 </div>
+
+<div class="preview">
+
+<div class="previewTop">
 
 <div>
 
-<img
-src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=900"
-class="rounded-3xl glow w-full"
-alt="Campus Placement">
+<small style="color:#64748b">
+PLACEMENT OVERVIEW
+</small>
 
-</div>
-
-</div>
-
-</section>
-
-<!-- ABOUT -->
-
-<section id="about" class="py-20 bg-white">
-
-<div class="max-w-7xl mx-auto px-6">
-
-<div class="grid lg:grid-cols-2 gap-14 items-center">
-
-<div>
-
-<img
-src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=900"
-class="rounded-3xl shadow-2xl hover:scale-105 duration-500"
-alt="Students">
-
-</div>
-
-<div>
-
-<h4 class="text-blue-600 font-semibold uppercase tracking-widest">
-
-About Us
-
-</h4>
-
-<h2 class="text-4xl font-bold mt-4 text-gray-800">
-
-Empowering Students with Better Career Opportunities
-
-</h2>
-
-<p class="text-gray-600 mt-6 leading-8">
-
-Campus Placement Management System is a modern digital platform designed to simplify campus recruitment by connecting students, recruiters and placement officers in one place.
-
-</p>
-
-<div class="grid grid-cols-2 gap-6 mt-8">
-
-<div class="bg-blue-50 rounded-xl p-6 hover:shadow-xl transition">
-
-<i class="fa-solid fa-user-graduate text-4xl text-blue-600"></i>
-
-<h3 class="font-bold text-xl mt-4">
-
-Student Portal
-
+<h3 style="margin:5px 0">
+Campus performance
 </h3>
 
-<p class="text-gray-600 mt-2">
+</div>
 
-Complete placement dashboard with resume management, job applications and application tracking.
-
-</p>
+<span class="live">LIVE</span>
 
 </div>
 
-<div class="bg-blue-50 rounded-xl p-6 hover:shadow-xl transition">
+<div class="metric">
 
-<i class="fa-solid fa-building text-4xl text-blue-600"></i>
+<div>
+<span>Active jobs</span>
+<b>120+</b>
+</div>
 
-<h3 class="font-bold text-xl mt-4">
+<div>
+<span>Recruiters</span>
+<b>50+</b>
+</div>
 
-Recruiters
+<div class="wide">
 
-</h3>
+<span style="color:#c7d2fe">
+Built for smarter placement operations
+</span>
 
-<p class="text-gray-600 mt-2">
+<div style="height:8px;background:#ffffff35;border-radius:8px;margin-top:18px">
 
-Companies can post jobs, shortlist candidates and schedule interviews easily.
-
-</p>
+<div style="height:8px;width:80%;background:#fff;border-radius:8px"></div>
 
 </div>
 
@@ -380,87 +1227,64 @@ Companies can post jobs, shortlist candidates and schedule interviews easily.
 
 </section>
 
-<!-- FEATURES -->
+<section id="about" class="section">
 
-<section id="features" class="py-20 bg-gray-100">
+<div class="container about">
 
-<div class="max-w-7xl mx-auto px-6">
+<div>
 
-<div class="text-center mb-16">
+<span class="eyebrow">About CampusConnect</span>
 
-<h4 class="text-blue-600 uppercase font-semibold">
+<h2>One system. Every placement workflow.</h2>
 
-Features
+<p class="lead">
 
-</h4>
-
-<h2 class="text-4xl font-bold mt-4">
-
-Everything You Need for Campus Placements
-
-</h2>
-
-<p class="text-gray-500 mt-4 max-w-2xl mx-auto">
-
-A complete placement solution for students, companies and administrators.
+CampusConnect digitizes the placement journey
+so students can discover opportunities,
+companies can manage candidates,
+and administrators can monitor the complete
+placement cycle from one professional dashboard.
 
 </p>
 
 </div>
 
-<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+<div class="aboutBox">
 
-<div class="bg-white p-8 rounded-2xl shadow-lg hover:-translate-y-2 transition">
-
-<i class="fa-solid fa-user text-5xl text-blue-600"></i>
-
-<h3 class="font-bold text-2xl mt-5">
-
-Student Dashboard
-
+<h3 style="margin-top:0">
+Built for campus teams
 </h3>
 
-<p class="mt-4 text-gray-600">
+<p class="lead">
 
-Manage profile, upload resume, apply for jobs and track application status.
+Simple enough to use quickly.
+Structured enough for an industry-level academic project.
+Students, recruiters and administrators get role-specific
+workflows without unnecessary complexity.
 
 </p>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px">
+
+<div style="padding:16px;background:var(--soft);border-radius:14px">
+
+<b>Students</b>
+
+<small style="display:block;color:var(--muted);margin-top:5px">
+Jobs • Applications • Interviews
+</small>
 
 </div>
 
-<div class="bg-white p-8 rounded-2xl shadow-lg hover:-translate-y-2 transition">
+<div style="padding:16px;background:var(--soft);border-radius:14px">
 
-<i class="fa-solid fa-briefcase text-5xl text-green-600"></i>
+<b>Recruiters</b>
 
-<h3 class="font-bold text-2xl mt-5">
-
-Job Management
-
-</h3>
-
-<p class="mt-4 text-gray-600">
-
-Browse jobs, search opportunities and apply instantly with one click.
-
-</p>
+<small style="display:block;color:var(--muted);margin-top:5px">
+Jobs • Applicants • Selection
+</small>
 
 </div>
-
-<div class="bg-white p-8 rounded-2xl shadow-lg hover:-translate-y-2 transition">
-
-<i class="fa-solid fa-building text-5xl text-purple-600"></i>
-
-<h3 class="font-bold text-2xl mt-5">
-
-Company Portal
-
-</h3>
-
-<p class="mt-4 text-gray-600">
-
-Companies can post jobs, manage applicants and shortlist students.
-
-</p>
 
 </div>
 
@@ -470,83 +1294,40 @@ Companies can post jobs, manage applicants and shortlist students.
 
 </section>
 
-<!-- RECRUITERS -->
+<section id="features" class="section features">
 
-<section id="recruiters" class="py-20 bg-white">
+<div class="container center">
 
-<div class="max-w-7xl mx-auto px-6">
+<span class="eyebrow">Platform Features</span>
 
-<div class="text-center mb-14">
+<h2>Everything important, nothing unnecessary.</h2>
 
-<h4 class="text-blue-600 font-semibold uppercase">
-
-Our Recruiters
-
-</h4>
-
-<h2 class="text-4xl font-bold mt-3">
-
-Top Companies Hiring Our Students
-
-</h2>
-
-<p class="text-gray-500 mt-4">
-
-Trusted by leading national and multinational companies.
-
+<p class="lead">
+Focused modules for a clean and professional placement workflow.
 </p>
 
-</div>
+<div class="grid3">
 
-<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+${[
+['🎓','Student Placement','Profile, resume, jobs, applications and interview tracking.'],
+['🏢','Recruiter Management','Post jobs, review applicants, shortlist and select candidates.'],
+['📊','Placement Analytics','Monitor students, companies, jobs and placement performance.'],
+['🗓️','Interview Scheduling','Keep interview rounds and schedules organized.'],
+['🔔','Notifications','Surface important placement updates at the right time.'],
+['🔐','Secure Access','Role-based Student, Company and Admin authentication.']
+].map(x=>`
 
-<div class="bg-gray-100 p-6 rounded-xl text-center shadow hover:shadow-xl transition">
+<article class="card" style="text-align:left">
 
-<i class="fa-brands fa-google text-5xl text-red-500"></i>
+<div class="ico">${x[0]}</div>
 
-<p class="mt-3 font-semibold">Google</p>
+<h3>${x[1]}</h3>
 
-</div>
+<p>${x[2]}</p>
 
-<div class="bg-gray-100 p-6 rounded-xl text-center shadow hover:shadow-xl transition">
+</article>
 
-<i class="fa-brands fa-microsoft text-5xl text-blue-600"></i>
-
-<p class="mt-3 font-semibold">Microsoft</p>
-
-</div>
-
-<div class="bg-gray-100 p-6 rounded-xl text-center shadow hover:shadow-xl transition">
-
-<i class="fa-brands fa-amazon text-5xl text-yellow-500"></i>
-
-<p class="mt-3 font-semibold">Amazon</p>
-
-</div>
-
-<div class="bg-gray-100 p-6 rounded-xl text-center shadow hover:shadow-xl transition">
-
-<i class="fa-brands fa-apple text-5xl"></i>
-
-<p class="mt-3 font-semibold">Apple</p>
-
-</div>
-
-<div class="bg-gray-100 p-6 rounded-xl text-center shadow hover:shadow-xl transition">
-
-<i class="fa-brands fa-meta text-5xl text-blue-500"></i>
-
-<p class="mt-3 font-semibold">Meta</p>
-
-</div>
-
-<div class="bg-gray-100 p-6 rounded-xl text-center shadow hover:shadow-xl transition">
-
-<i class="fa-brands fa-linkedin text-5xl text-blue-700"></i>
-
-<p class="mt-3 font-semibold">LinkedIn</p>
-
-</div>
+`).join('')}
 
 </div>
 
@@ -554,527 +1335,1997 @@ Trusted by leading national and multinational companies.
 
 </section>
 
-<!-- STATISTICS -->
+<section id="recruiters" class="section">
 
-<section class="py-20 bg-blue-700 text-white">
+<div class="container">
 
-<div class="max-w-7xl mx-auto px-6">
+<span class="eyebrow">Recruiters</span>
 
-<div class="grid md:grid-cols-4 gap-8 text-center">
+<h2>Companies students aspire to join.</h2>
 
-<div>
+<div class="recruiters">
 
-<h2 class="text-5xl font-bold">500+</h2>
+${companies.map(c=>`
 
-<p class="mt-3">Registered Students</p>
+<a class="company"
+href="${c[2]}"
+target="_blank"
+rel="noopener">
 
-</div>
+<div class="companyIcon">${c[0]}</div>
 
-<div>
+<b>${c[1]}</b>
 
-<h2 class="text-5xl font-bold">120+</h2>
-
-<p class="mt-3">Companies</p>
-
-</div>
-
-<div>
-
-<h2 class="text-5xl font-bold">350+</h2>
-
-<p class="mt-3">Job Opportunities</p>
-
-</div>
-
-<div>
-
-<h2 class="text-5xl font-bold">95%</h2>
-
-<p class="mt-3">Placement Rate</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- ================= TESTIMONIALS ================= -->
-
-<section class="py-20 bg-gray-100">
-
-<div class="max-w-7xl mx-auto px-6">
-
-<div class="text-center mb-14">
-
-<h4 class="text-blue-600 uppercase font-semibold">
-Testimonials
-</h4>
-
-<h2 class="text-4xl font-bold mt-3">
-What Our Students Say
-</h2>
-
-</div>
-
-<div class="grid md:grid-cols-3 gap-8">
-
-<div class="bg-white p-8 rounded-2xl shadow-lg">
-
-<img src="https://i.pravatar.cc/100?img=11"
-class="w-20 h-20 rounded-full mx-auto">
-
-<h3 class="text-xl font-bold text-center mt-5">
-Rahul Sharma
-</h3>
-
-<p class="text-center text-gray-500">
-Software Engineer
-</p>
-
-<p class="mt-5 text-gray-600 text-center">
-"The placement portal made job applications simple and helped me get placed in a leading IT company."
-</p>
-
-</div>
-
-<div class="bg-white p-8 rounded-2xl shadow-lg">
-
-<img src="https://i.pravatar.cc/100?img=32"
-class="w-20 h-20 rounded-full mx-auto">
-
-<h3 class="text-xl font-bold text-center mt-5">
-Priya Patel
-</h3>
-
-<p class="text-center text-gray-500">
-Data Analyst
-</p>
-
-<p class="mt-5 text-gray-600 text-center">
-"Easy to use, responsive and professional."
-</p>
-
-</div>
-
-<div class="bg-white p-8 rounded-2xl shadow-lg">
-
-<img src="https://i.pravatar.cc/100?img=45"
-class="w-20 h-20 rounded-full mx-auto">
-
-<h3 class="text-xl font-bold text-center mt-5">
-Aman Verma
-</h3>
-
-<p class="text-center text-gray-500">
-Full Stack Developer
-</p>
-
-<p class="mt-5 text-gray-600 text-center">
-"Interview scheduling saved a lot of time."
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- ================= CTA ================= -->
-
-<section class="py-20 bg-gradient-to-r from-blue-700 to-indigo-700 text-white">
-
-<div class="max-w-5xl mx-auto text-center px-6">
-
-<h2 class="text-5xl font-bold">
-
-Start Your Placement Journey Today
-
-</h2>
-
-<p class="mt-6 text-xl">
-
-Join hundreds of students and recruiters on our Campus Placement Management System.
-
-</p>
-
-<div class="mt-10">
-
-<a href="auth/register.html"
-class="bg-white text-blue-700 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition">
-
-Register Now
+<small>Visit company ↗</small>
 
 </a>
 
+`).join('')}
+
 </div>
 
 </div>
 
 </section>
 
-<!-- CONTACT -->
+<section id="contact" class="section contact">
 
-<section id="contact" class="py-20 bg-gray-50">
+<div class="container contactGrid">
 
-<div class="max-w-7xl mx-auto px-6">
+<div>
 
-<div class="text-center mb-14">
+<span class="eyebrow" style="color:#c7d2fe">
+Contact
+</span>
 
-<h4 class="text-blue-600 uppercase font-semibold">
+<h2>Ready to modernize your placement process?</h2>
 
-Contact Us
-
-</h4>
-
-<h2 class="text-4xl font-bold mt-3">
-
-Get In Touch
-
-</h2>
-
-<p class="text-gray-500 mt-4">
-
-We'd love to hear from you.
-
+<p style="color:#dbeafe;line-height:1.8">
+Connect with your Training & Placement
+team through CampusConnect.
 </p>
 
 </div>
 
-<div class="grid lg:grid-cols-2 gap-10">
+<div class="contactBox">
 
-<!-- Contact Form -->
+<h3 style="margin-top:0">
+Campus Placement Office
+</h3>
 
-<div class="bg-white rounded-2xl shadow-lg p-8">
+<p style="color:#dbeafe">
+✉ ashokraomane@gmail.com
+</p>
 
-<form id="contactForm">
-
-<div class="mb-5">
-
-<label class="font-semibold">
-
-Full Name
-
-</label>
-
-<input
-type="text"
-placeholder="Enter your name"
-required
-class="w-full mt-2 border rounded-lg p-3 focus:ring-2 focus:ring-blue-600">
+<p style="color:#dbeafe">
+⌖ College Training & Placement Cell
+</p>
 
 </div>
 
-<div class="mb-5">
+</div>
 
-<label class="font-semibold">
+</section>
 
-Email
+<footer class="footer">
 
-</label>
+<div>
+© 2026 CampusConnect • Campus Placement Management System
+</div>
 
-<input
-type="email"
-placeholder="Enter your email"
-required
-class="w-full mt-2 border rounded-lg p-3 focus:ring-2 focus:ring-blue-600">
+<div style="margin-top:8px">
+
+Developed by
+<strong class="developer">Purva Shirgave</strong>
 
 </div>
 
-<div class="mb-5">
+<div style="margin-top:6px">
+Ashokrao Mane Polytechnic, Vthar Tarf Vadgaon
+· Dept. of Artificial Intelligence and Machine Learning
+</div>
 
-<label class="font-semibold">
+</footer>
 
-Message
+`;
 
-</label>
+}
 
-<textarea
-rows="5"
-required
-placeholder="Write your message..."
-class="w-full mt-2 border rounded-lg p-3 focus:ring-2 focus:ring-blue-600"></textarea>
+/* AUTH */
+
+function openAuth(mode){
+
+authMode=mode;
+
+renderAuth();
+
+}
+
+function closeAuth(){
+
+document.querySelector('.modal')?.remove();
+
+}
+
+function renderAuth(){
+
+document.querySelector('.modal')?.remove();
+
+document.body.insertAdjacentHTML(
+'beforeend',
+`
+
+<div class="modal">
+
+<div class="modalBox">
+
+<div class="modalHead">
+
+<div>
+
+<span class="eyebrow">CampusConnect</span>
+
+<h2 style="margin:7px 0 0">
+
+${authMode==='register'
+?'Create your account'
+:'Welcome back'}
+
+</h2>
 
 </div>
+
+<button class="close" onclick="closeAuth()">×</button>
+
+</div>
+
+<div class="tabs">
 
 <button
-type="submit"
-class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg w-full">
+class="${authMode==='login'?'active':''}"
+onclick="openAuth('login')">
+Login
+</button>
 
-Send Message
+<button
+class="${authMode==='register'?'active':''}"
+onclick="openAuth('register')">
+Register
+</button>
+
+</div>
+
+<div id="authMessage"></div>
+
+<form onsubmit="handleAuth(event)">
+
+${authMode==='register'
+?
+`
+<input
+id="authName"
+class="field"
+required
+placeholder="Full name / Company name">
+`
+:''}
+
+<input
+id="authEmail"
+class="field"
+required
+type="email"
+placeholder="Email address">
+
+<input
+id="authPassword"
+class="field"
+required
+type="password"
+minlength="6"
+placeholder="Password">
+
+<select id="authRole" class="field">
+
+<option value="student">Student</option>
+<option value="company">Company</option>
+<option value="admin">Admin / TPO</option>
+
+</select>
+
+<button class="btn primary" style="width:100%">
+
+${authMode==='register'
+?'Create Account'
+:'Sign In'}
 
 </button>
 
 </form>
 
-</div>
-
-<!-- Contact Details -->
-
-<div class="space-y-6">
-
-<div class="bg-white p-6 rounded-xl shadow">
-
-<i class="fa-solid fa-location-dot text-blue-600 text-3xl"></i>
-
-<h3 class="text-xl font-bold mt-3">
-
-Address
-
-</h3>
-
-<p class="text-gray-600 mt-2">
-
-ABC Engineering College<br>
-
-Kolhapur, Maharashtra
-
-</p>
-
-</div>
-
-<div class="bg-white p-6 rounded-xl shadow">
-
-<i class="fa-solid fa-envelope text-blue-600 text-3xl"></i>
-
-<h3 class="text-xl font-bold mt-3">
-
-Email
-
-</h3>
-
-<p class="text-gray-600 mt-2">
-
-placement@college.edu
-
-</p>
-
-</div>
-
-<div class="bg-white p-6 rounded-xl shadow">
-
-<i class="fa-solid fa-phone text-blue-600 text-3xl"></i>
-
-<h3 class="text-xl font-bold mt-3">
-
-Phone
-
-</h3>
-
-<p class="text-gray-600 mt-2">
-
-+91 9876543210
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- FOOTER -->
-
-<footer class="bg-gray-900 text-white">
-
-<div class="max-w-7xl mx-auto px-6 py-14">
-
-<div class="grid md:grid-cols-4 gap-10">
-
-<div>
-
-<h2 class="text-2xl font-bold">
-
-Campus Placement
-
-</h2>
-
-<p class="mt-4 text-gray-400">
-
-A smart placement portal connecting students, companies and administrators.
-
-</p>
-
-</div>
-
-<div>
-
-<h3 class="font-bold text-lg">
-
-Quick Links
-
-</h3>
-
-<ul class="mt-4 space-y-2 text-gray-400">
-
-<li><a href="#">Home</a></li>
-
-<li><a href="#about">About</a></li>
-
-<li><a href="#features">Features</a></li>
-
-<li><a href="#contact">Contact</a></li>
-
-</ul>
-
-</div>
-
-<div>
-
-<h3 class="font-bold text-lg">
-
-Services
-
-</h3>
-
-<ul class="mt-4 space-y-2 text-gray-400">
-
-<li>Student Portal</li>
-
-<li>Company Portal</li>
-
-<li>Admin Dashboard</li>
-
-<li>Job Management</li>
-
-</ul>
-
-</div>
-
-<div>
-
-<h3 class="font-bold text-lg">
-
-Follow Us
-
-</h3>
-
-<div class="flex gap-4 mt-5 text-2xl">
-
-<a href="#"><i class="fa-brands fa-facebook"></i></a>
-
-<a href="#"><i class="fa-brands fa-instagram"></i></a>
-
-<a href="#"><i class="fa-brands fa-linkedin"></i></a>
-
-<a href="#"><i class="fa-brands fa-github"></i></a>
-
-</div>
-
-</div>
-
-</div>
-
-<hr class="my-8 border-gray-700">
-
-<p class="text-center text-gray-400">
-
-© 2026 Campus Placement Management System. All Rights Reserved.
-
-</p>
-
-</div>
-
-</footer>
-
-<!-- Scroll To Top -->
+${authMode==='login'
+?
+`
+<p style="text-align:center">
 
 <button
-id="topBtn"
-class="hidden fixed bottom-6 right-6 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700">
+style="background:none;color:#4f46e5;font-weight:800;font-size:12px"
+onclick="forgotPassword()">
 
-<i class="fa-solid fa-arrow-up"></i>
+Forgot password?
 
 </button>
 
-<!-- Dark Mode -->
+</p>
+`
+:''}
 
-<button
-id="darkBtn"
-class="fixed bottom-6 left-6 bg-black text-white p-4 rounded-full shadow-lg rounded-full">
+<p class="note">
 
-<i class="fa-solid fa-moon"></i>
+Your account and role are stored securely
+with Firebase Authentication and Cloud Firestore.
 
-</button>
+</p>
 
-<script>
+</div>
 
-const menuBtn=document.getElementById("menuBtn");
-const mobileMenu=document.getElementById("mobileMenu");
+</div>
 
-menuBtn.onclick=()=>{
-
-mobileMenu.classList.toggle("hidden");
-
-};
-
-const topBtn=document.getElementById("topBtn");
-
-window.addEventListener("scroll",()=>{
-
-if(window.scrollY>300){
-
-topBtn.classList.remove("hidden");
-
-}else{
-
-topBtn.classList.add("hidden");
+`
+);
 
 }
 
-});
+function showAuthMessage(text,success=false){
 
-topBtn.onclick=()=>{
+const el=document.getElementById('authMessage');
 
-window.scrollTo({
+if(el){
 
-top:0,
+el.innerHTML=`
 
-behavior:"smooth"
+<div class="message ${success?'success':''}">
+${text}
+</div>
 
-});
+`;
 
-};
-
-const darkBtn=document.getElementById("darkBtn");
-function setTheme(dark){
- document.body.classList.toggle("dark-mode",dark);
- darkBtn.innerHTML=dark?'<i class="fa-solid fa-sun"></i>':'<i class="fa-solid fa-moon"></i>';
- darkBtn.title=dark?"Light Mode":"Dark Mode";
 }
-setTheme(localStorage.getItem("campusTheme")==="dark");
-darkBtn.onclick=()=>{
- const dark=!document.body.classList.contains("dark-mode");
- setTheme(dark);
- localStorage.setItem("campusTheme",dark?"dark":"light");
-};
 
-window.addEventListener("load",()=>{
+}
 
-document.getElementById("loader").style.display="none";
+/* DEVICE ID */
 
-});
+function deviceId(){
 
-document.getElementById("contactForm").addEventListener("submit",function(e){
+let id=localStorage.getItem('campus_admin_device');
+
+if(!id){
+
+id=crypto.randomUUID?
+crypto.randomUUID():
+String(Date.now())+Math.random();
+
+localStorage.setItem('campus_admin_device',id);
+
+}
+
+return id;
+
+}
+
+/* LOGIN REGISTER */
+
+async function handleAuth(e){
 
 e.preventDefault();
 
-alert("Message Sent Successfully!");
+const F=window.CampusFirebase;
 
-this.reset();
+if(!F){
+
+showAuthMessage('Firebase is still loading. Please try again.');
+
+return;
+
+}
+
+const email=document.getElementById('authEmail').value.trim();
+const password=document.getElementById('authPassword').value;
+const role=document.getElementById('authRole').value;
+
+try{
+
+if(authMode==='register'){
+
+const name=document.getElementById('authName').value.trim();
+
+if(role==='admin'){
+
+const flag=await F.getDoc(
+F.doc(F.db,'system','adminRegistration')
+);
+
+if(flag.exists() && flag.data().registered===true){
+
+showAuthMessage(
+'Admin registration is already completed. Only one admin registration is allowed.'
+);
+
+return;
+
+}
+
+}
+
+const cred=await F.createUserWithEmailAndPassword(
+F.auth,
+email,
+password
+);
+
+await F.setDoc(
+F.doc(F.db,'users',cred.user.uid),
+{
+uid:cred.user.uid,
+name:name,
+email:email,
+role:role,
+createdAt:F.serverTimestamp()
+}
+);
+
+if(role==='admin'){
+
+await F.setDoc(
+F.doc(F.db,'system','adminRegistration'),
+{
+registered:true,
+uid:cred.user.uid,
+deviceId:deviceId(),
+createdAt:F.serverTimestamp()
+}
+);
+
+}
+
+showAuthMessage(
+'Account created successfully. Opening your dashboard...',
+true
+);
+
+setTimeout(()=>openDashboard(role,name),700);
+
+}else{
+
+const cred=await F.signInWithEmailAndPassword(
+F.auth,
+email,
+password
+);
+
+const snap=await F.getDoc(
+F.doc(F.db,'users',cred.user.uid)
+);
+
+if(!snap.exists()){
+
+await F.signOut(F.auth);
+
+showAuthMessage('User profile was not found in Firestore.');
+
+return;
+
+}
+
+const data=snap.data();
+
+if(data.role!==role){
+
+await F.signOut(F.auth);
+
+showAuthMessage(
+'Selected role does not match this account.'
+);
+
+return;
+
+}
+
+showAuthMessage(
+'Login successful. Opening dashboard...',
+true
+);
+
+setTimeout(
+()=>openDashboard(
+data.role,
+data.name||email
+),
+600
+);
+
+}
+
+}catch(err){
+
+let msg=err.message||'Authentication failed.';
+
+msg=msg.replace('Firebase: ','').trim();
+
+showAuthMessage(msg);
+
+}
+
+}
+
+/* FORGOT PASSWORD */
+
+async function forgotPassword(){
+
+const email=document.getElementById('authEmail')?.value.trim();
+
+if(!email){
+
+showAuthMessage('Enter your email address first.');
+
+return;
+
+}
+
+try{
+
+await window.CampusFirebase.sendPasswordResetEmail(
+window.CampusFirebase.auth,
+email
+);
+
+showAuthMessage(
+'Password reset email sent. Check your inbox.',
+true
+);
+
+}catch(e){
+
+let msg=
+e.code==='auth/user-not-found'
+?
+'No account exists with this email.'
+:
+e.message;
+
+showAuthMessage(msg);
+
+}
+
+}
+
+/* DASHBOARD */
+
+function openDashboard(role,name){
+
+currentRole=role;
+
+currentUser={name:name};
+
+closeAuth();
+
+root.innerHTML=dashboard(role,name);
+
+window.scrollTo(0,0);
+
+}
+
+function dashboard(role,name){
+
+const labels=
+role==='student'
+?
+[
+'Dashboard',
+'My Profile',
+'Find Jobs',
+'My Applications',
+'Interviews',
+'Notifications'
+]
+:
+role==='company'
+?
+[
+'Dashboard',
+'Company Profile',
+'Manage Jobs',
+'Applicants',
+'Interviews',
+'Notifications'
+]
+:
+[
+'Dashboard',
+'Students',
+'Companies',
+'Jobs',
+'Applications',
+'Reports'
+];
+
+const stats=
+role==='admin'
+?
+['Registered Students','Partner Companies','Applications']
+:
+role==='company'
+?
+['Active Jobs','Applicants','Interviews']
+:
+['Active Jobs','Applications','Interviews'];
+
+return `
+
+<div class="dash">
+
+<aside class="dashnav">
+
+<div
+class="brand"
+style="color:#fff;margin-bottom:30px">
+
+<span class="logo">C</span>
+CampusConnect
+
+</div>
+
+<small style="color:#64748b;text-transform:uppercase">
+${role} portal
+</small>
+
+<div class="dashlinks" style="margin-top:12px">
+
+${labels.map((x,i)=>`
+
+<button
+class="${i===0?'active':''}"
+onclick="dashboardAction('${role}',${i},'${x.replace(/'/g,"\\'")}')">
+
+${dashboardIcon(x)} ${x}
+
+</button>
+
+`).join('')}
+
+<button onclick="logoutUser()">
+🚪 Logout
+</button>
+
+</div>
+
+</aside>
+
+<main class="dashmain">
+
+<div
+style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:15px">
+
+<div>
+
+<span class="eyebrow">${role} portal</span>
+
+<h1 id="dashTitle" style="margin:7px 0">
+Welcome, ${escapeHtml(name)}
+</h1>
+
+<p id="dashSubtitle" style="color:var(--muted)">
+Your placement workspace is ready.
+</p>
+
+</div>
+
+<div style="display:flex;gap:9px">
+
+<button class="icon" onclick="toggle()">☾</button>
+
+<button class="btn outline" onclick="logoutUser()">
+Logout
+</button>
+
+</div>
+
+</div>
+
+<section id="dashContent">
+
+${dashboardHome(role)}
+
+</section>
+
+</main>
+
+</div>
+
+`;
+
+}
+
+/* ICONS */
+
+function dashboardIcon(title){
+
+const icons={
+'Dashboard':'🏠',
+'My Profile':'👤',
+'Find Jobs':'💼',
+'My Applications':'📋',
+'Interviews':'🗓️',
+'Notifications':'🔔',
+'Company Profile':'🏢',
+'Manage Jobs':'💼',
+'Applicants':'👥',
+'Students':'🎓',
+'Companies':'🏢',
+'Jobs':'💼',
+'Applications':'📋',
+'Reports':'📊'
+};
+
+return icons[title]||'📌';
+
+}
+
+/* DASHBOARD HOME */
+
+function dashboardHome(role){
+
+let cards;
+
+if(role==='student'){
+
+cards=[
+['💼','Active Jobs','48','View current placement opportunities','Find Jobs'],
+['📋','Applications','12','Track your submitted applications','My Applications'],
+['🗓️','Interviews','3','Check upcoming interview rounds','Interviews'],
+['🔔','Notifications','5','View latest placement updates','Notifications'],
+['👤','Profile','85%','Complete your placement profile','My Profile'],
+['📄','Resume','Ready','Manage your latest resume','My Profile']
+];
+
+}else if(role==='company'){
+
+cards=[
+['💼','Active Jobs','8','Manage your current job openings','Manage Jobs'],
+['👥','Applicants','126','Review candidate applications','Applicants'],
+['🗓️','Interviews','14','Manage scheduled interviews','Interviews'],
+['🔔','Notifications','7','View recruiter updates','Notifications'],
+['🏢','Company Profile','92%','Keep company information updated','Company Profile'],
+['📊','Selection','18','Review selected candidates','Applicants']
+];
+
+}else{
+
+cards=[
+['🎓','Students','524','Manage registered students','Students'],
+['🏢','Companies','62','Manage partner companies','Companies'],
+['💼','Jobs','48','Monitor placement jobs','Jobs'],
+['📋','Applications','1,248','Track all applications','Applications'],
+['📊','Placement Rate','78%','View placement performance','Reports'],
+['🗓️','Interviews','86','Monitor interview schedules','Reports']
+];
+
+}
+
+return `
+
+<div class="dashGrid" style="margin-top:30px">
+
+${cards.slice(0,3).map(c=>`
+
+<div class="dashCard">
+
+<small style="color:var(--muted)">
+${c[0]} ${c[1]}
+</small>
+
+<b style="display:block;font-size:32px;margin-top:10px">
+${c[2]}
+</b>
+
+<p style="color:var(--muted);font-size:12px">
+${c[3]}
+</p>
+
+<button
+class="smallBtn primaryBtn"
+onclick="dashboardAction('${role}',getMenuIndex('${c[4]}'),'${c[4]}')">
+
+Open →
+</button>
+
+</div>
+
+`).join('')}
+
+</div>
+
+<div class="dashActionGrid">
+
+${cards.slice(3).map(c=>`
+
+<div
+class="dashFeature"
+onclick="dashboardAction('${role}',getMenuIndex('${c[4]}'),'${c[4]}')">
+
+<div class="dashFeatureIcon">
+${c[0]}
+</div>
+
+<h3 style="margin:0 0 7px">
+${c[1]}
+</h3>
+
+<p style="color:var(--muted);font-size:13px;line-height:1.6">
+${c[3]}
+</p>
+
+<span class="featureBtn">
+Manage →
+</span>
+
+</div>
+
+`).join('')}
+
+</div>
+
+<div class="dashCard" style="margin-top:20px">
+
+<h3 style="margin-top:0">
+⚡ Quick Actions
+</h3>
+
+<p style="color:var(--muted)">
+Choose any module below to continue managing your placement activities.
+</p>
+
+<div class="actionRow">
+
+${getRoleLabels(role).slice(1).map(x=>`
+
+<button
+class="smallBtn primaryBtn"
+onclick="dashboardAction('${role}',getMenuIndex('${x}'),'${x}')">
+
+${dashboardIcon(x)} ${x}
+
+</button>
+
+`).join('')}
+
+</div>
+
+</div>
+
+`;
+
+}
+
+function getRoleLabels(role){
+
+return role==='student'
+?
+['Dashboard','My Profile','Find Jobs','My Applications','Interviews','Notifications']
+:
+role==='company'
+?
+['Dashboard','Company Profile','Manage Jobs','Applicants','Interviews','Notifications']
+:
+['Dashboard','Students','Companies','Jobs','Applications','Reports'];
+
+}
+
+function getMenuIndex(title){
+
+const labels=getRoleLabels(currentRole);
+
+return labels.indexOf(title);
+
+}
+
+/* DASHBOARD ACTION */
+
+function dashboardAction(role,index,title){
+
+document.querySelectorAll('.dashlinks button').forEach((b,i)=>{
+b.classList.toggle('active',i===index);
+});
+
+if(index===0){
+
+document.getElementById('dashTitle').textContent='Dashboard';
+
+document.getElementById('dashSubtitle').textContent=
+'Your placement workspace is ready.';
+
+document.getElementById('dashContent').innerHTML=
+dashboardHome(role);
+
+return;
+
+}
+
+if(role==='student' && title==='My Profile'){
+
+renderStudentProfile();
+
+return;
+
+}
+
+renderModule(role,title);
+
+}
+
+/* MODULES */
+
+function renderModule(role,title){
+
+const modules={
+
+'Find Jobs':{
+icon:'💼',
+title:'Find Jobs',
+subtitle:'Discover placement opportunities matching your profile.',
+stats:['48 Active Jobs','18 New This Week','12 Matching Your Skills'],
+items:[
+['Software Developer','TCS','Pune','₹6 LPA','B.Tech / Diploma'],
+['Graduate Engineer Trainee','Infosys','Pune','₹5.5 LPA','Engineering'],
+['Business Analyst','Accenture','Mumbai','₹7 LPA','Any Graduate'],
+['Web Developer','Capgemini','Mumbai','₹5 LPA','CS / IT'],
+['System Engineer','Wipro','Bangalore','₹4.8 LPA','Engineering'],
+['Associate Software Engineer','Deloitte','Pune','₹6.5 LPA','CS / IT']
+]
+},
+
+'My Applications':{
+icon:'📋',
+title:'My Applications',
+subtitle:'Track every application from submission to selection.',
+stats:['12 Total','5 Under Review','3 Shortlisted'],
+items:[
+['TCS','Software Developer','Submitted','12 Aug 2026'],
+['Infosys','Graduate Engineer','Shortlisted','10 Aug 2026'],
+['Accenture','Business Analyst','Under Review','08 Aug 2026'],
+['Capgemini','Web Developer','Interview','06 Aug 2026'],
+['Wipro','System Engineer','Selected','02 Aug 2026']
+]
+},
+
+'Interviews':{
+icon:'🗓️',
+title:'Interviews',
+subtitle:'Manage your upcoming placement interviews.',
+stats:['3 Upcoming','2 Technical','1 HR Round'],
+items:[
+['TCS','Technical Round','15 Aug 2026','10:00 AM','Online'],
+['Infosys','HR Round','18 Aug 2026','11:30 AM','Online'],
+['Capgemini','Final Round','21 Aug 2026','2:00 PM','Campus']
+]
+},
+
+'Notifications':{
+icon:'🔔',
+title:'Notifications',
+subtitle:'Stay updated with important placement activities.',
+stats:['5 Unread','12 This Month','3 Interview Alerts'],
+items:[
+['New Job Posted','TCS has posted a Software Developer position.','Today'],
+['Application Update','Your Infosys application is shortlisted.','Yesterday'],
+['Interview Schedule','Your TCS technical round is scheduled.','Yesterday'],
+['New Recruiter','A new company has joined CampusConnect.','2 days ago']
+]
+},
+
+'Company Profile':{
+icon:'🏢',
+title:'Company Profile',
+subtitle:'Manage your organization and recruiter information.',
+stats:['92% Profile Complete','1 Recruiter','8 Active Jobs'],
+items:[
+['Company Name','CampusConnect Technologies'],
+['Industry','Information Technology'],
+['Website','www.example.com'],
+['Location','Pune, Maharashtra'],
+['Recruiter Contact','recruiter@example.com']
+]
+},
+
+'Manage Jobs':{
+icon:'💼',
+title:'Manage Jobs',
+subtitle:'Create, update and manage your placement opportunities.',
+stats:['8 Active','3 Drafts','4 Closed'],
+items:[
+['Software Developer','Active','Pune','₹6 LPA'],
+['Frontend Developer','Active','Remote','₹5 LPA'],
+['Data Analyst','Active','Mumbai','₹6.5 LPA'],
+['AI/ML Intern','Draft','Pune','₹25K/month'],
+['System Engineer','Closed','Bangalore','₹5 LPA']
+]
+},
+
+'Applicants':{
+icon:'👥',
+title:'Applicants',
+subtitle:'Review, shortlist and manage candidates.',
+stats:['126 Applicants','38 Shortlisted','18 Selected'],
+items:[
+['Aarav Patil','Software Developer','Shortlisted','85%'],
+['Sneha More','Frontend Developer','Under Review','82%'],
+['Rahul Jadhav','Data Analyst','Selected','91%'],
+['Ananya Kulkarni','AI/ML Intern','Under Review','79%'],
+['Om Deshmukh','System Engineer','Rejected','62%']
+]
+},
+
+'Students':{
+icon:'🎓',
+title:'Students',
+subtitle:'Manage registered students and placement readiness.',
+stats:['524 Registered','412 Eligible','186 Placed'],
+items:[
+['Aarav Patil','AI & ML','8.7 CGPA','Eligible'],
+['Sneha More','Computer','9.1 CGPA','Placed'],
+['Rahul Jadhav','IT','8.2 CGPA','Eligible'],
+['Ananya Kulkarni','AI & ML','9.0 CGPA','Placed'],
+['Om Deshmukh','Mechanical','7.1 CGPA','Pending']
+]
+},
+
+'Companies':{
+icon:'🏢',
+title:'Companies',
+subtitle:'Manage recruiters participating in campus placements.',
+stats:['62 Partners','48 Active','6 Pending'],
+items:[
+['TCS','Information Technology','Active'],
+['Infosys','Information Technology','Active'],
+['Accenture','Consulting','Active'],
+['Deloitte','Consulting','Pending Verification'],
+['Capgemini','Information Technology','Active']
+]
+},
+
+'Jobs':{
+icon:'💼',
+title:'Jobs',
+subtitle:'Monitor all placement opportunities.',
+stats:['48 Active','9 Pending','21 Closed'],
+items:[
+['Software Developer','TCS','Active'],
+['Graduate Engineer','Infosys','Active'],
+['Business Analyst','Accenture','Active'],
+['Web Developer','Capgemini','Pending'],
+['System Engineer','Wipro','Closed']
+]
+},
+
+'Applications':{
+icon:'📋',
+title:'Applications',
+subtitle:'Monitor applications across the placement cycle.',
+stats:['1248 Total','426 Shortlisted','186 Selected'],
+items:[
+['Software Developer','TCS','Shortlisted','156'],
+['Graduate Engineer','Infosys','Selected','124'],
+['Business Analyst','Accenture','Under Review','210'],
+['Web Developer','Capgemini','Shortlisted','98'],
+['System Engineer','Wipro','Rejected','76']
+]
+},
+
+'Reports':{
+icon:'📊',
+title:'Placement Reports',
+subtitle:'Analyze placement performance and recruitment activity.',
+stats:['78% Placement Rate','62 Companies','186 Students Placed'],
+items:[
+['Placement Rate','78%','Current academic year'],
+['Companies Participated','62','Recruiting partners'],
+['Students Placed','186','Successfully selected'],
+['Average Package','₹6.2 LPA','Overall average'],
+['Highest Package','₹18 LPA','Top placement']
+]
+}
+
+};
+
+const m=modules[title];
+
+if(!m){
+
+document.getElementById('dashContent').innerHTML=`
+
+<div class="dashCard" style="margin-top:30px">
+
+<div class="emptyState">
+
+<div style="font-size:50px">📌</div>
+
+<h2>${title}</h2>
+
+<p>This module is ready to manage.</p>
+
+</div>
+
+</div>
+
+`;
+
+return;
+
+}
+
+document.getElementById('dashTitle').textContent=m.title;
+
+document.getElementById('dashSubtitle').textContent=m.subtitle;
+
+let html=`
+
+<div class="dashGrid" style="margin-top:30px">
+
+${m.stats.map((s,i)=>`
+
+<div class="dashCard">
+
+<small style="color:var(--muted)">
+${i===0?'📌':i===1?'📈':'✓'} ${s.split(' ').slice(1).join(' ')}
+</small>
+
+<h2 style="margin:10px 0">
+${s.split(' ')[0]}
+</h2>
+
+<p style="color:var(--muted);font-size:12px">
+Placement overview
+</p>
+
+</div>
+
+`).join('')}
+
+</div>
+
+<div class="dashCard" style="margin-top:20px">
+
+<div style="display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap">
+
+<div>
+
+<div style="font-size:35px">${m.icon}</div>
+
+<h2 style="margin:7px 0">${m.title}</h2>
+
+<p style="color:var(--muted)">
+${m.subtitle}
+</p>
+
+</div>
+
+<div class="actionRow">
+
+<button class="smallBtn primaryBtn"
+onclick="showActionMessage('${getActionForModule(title)}')">
+
++ Add / Manage
+
+</button>
+
+<button class="smallBtn"
+onclick="showModuleToast('Search opened')">
+
+🔍 Search
+
+</button>
+
+</div>
+
+</div>
+
+<div class="searchBox">
+
+<input
+id="moduleSearch"
+class="field"
+placeholder="Search ${title.toLowerCase()}..."
+oninput="filterModuleTable()">
+
+</div>
+
+<div style="overflow-x:auto">
+
+<table class="dataTable" id="moduleTable">
+
+<thead>
+${tableHeader(title)}
+</thead>
+
+<tbody>
+
+${m.items.map((row,i)=>`
+
+<tr>
+
+${row.map((cell,j)=>`
+
+<td>
+
+${j===row.length-1 && isStatus(cell)
+?
+`<span class="status ${statusClass(cell)}">${cell}</span>`
+:
+cell}
+
+</td>
+
+`).join('')}
+
+<td>
+
+<button class="smallBtn"
+onclick="showModuleToast('Viewing ${escapeHtml(row[0])}')">
+
+View
+
+</button>
+
+</td>
+
+</tr>
+
+`).join('')}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+`;
+
+document.getElementById('dashContent').innerHTML=html;
+
+}
+
+function tableHeader(title){
+
+if(['Find Jobs'].includes(title))
+return '<tr><th>Position</th><th>Company</th><th>Location</th><th>Salary</th><th>Eligibility</th><th>Action</th></tr>';
+
+if(['My Applications'].includes(title))
+return '<tr><th>Company</th><th>Position</th><th>Status</th><th>Date</th><th>Action</th></tr>';
+
+if(['Interviews'].includes(title))
+return '<tr><th>Company</th><th>Round</th><th>Date</th><th>Time</th><th>Type</th><th>Action</th></tr>';
+
+if(title==='Notifications')
+return '<tr><th>Notification</th><th>Details</th><th>Date</th><th>Action</th></tr>';
+
+if(title==='Company Profile')
+return '<tr><th>Field</th><th>Details</th><th>Action</th></tr>';
+
+if(title==='Manage Jobs')
+return '<tr><th>Job Title</th><th>Status</th><th>Location</th><th>Salary</th><th>Action</th></tr>';
+
+if(title==='Applicants')
+return '<tr><th>Candidate</th><th>Position</th><th>Status</th><th>Score</th><th>Action</th></tr>';
+
+if(title==='Students')
+return '<tr><th>Student</th><th>Department</th><th>CGPA</th><th>Status</th><th>Action</th></tr>';
+
+if(title==='Companies')
+return '<tr><th>Company</th><th>Industry</th><th>Status</th><th>Action</th></tr>';
+
+if(title==='Jobs')
+return '<tr><th>Position</th><th>Company</th><th>Status</th><th>Action</th></tr>';
+
+if(title==='Applications')
+return '<tr><th>Position</th><th>Company</th><th>Status</th><th>Total</th><th>Action</th></tr>';
+
+if(title==='Reports')
+return '<tr><th>Report</th><th>Value</th><th>Description</th><th>Action</th></tr>';
+
+return '<tr><th>Details</th><th>Information</th><th>Action</th></tr>';
+
+}
+
+function isStatus(value){
+
+if(typeof value!=='string') return false;
+
+return [
+'Active',
+'Pending',
+'Closed',
+'Selected',
+'Shortlisted',
+'Rejected',
+'Under Review',
+'Interview',
+'Eligible',
+'Placed',
+'Pending Verification'
+].includes(value);
+
+}
+
+function statusClass(value){
+
+if(['Selected','Placed','Active','Eligible'].includes(value))
+return '';
+
+if(['Rejected','Closed'].includes(value))
+return 'red';
+
+if(['Shortlisted','Interview','Under Review'].includes(value))
+return 'blue';
+
+return 'yellow';
+
+}
+
+function filterModuleTable(){
+
+const input=document.getElementById('moduleSearch');
+
+const table=document.getElementById('moduleTable');
+
+if(!input||!table) return;
+
+const value=input.value.toLowerCase();
+
+table.querySelectorAll('tbody tr').forEach(row=>{
+
+row.style.display=
+row.innerText.toLowerCase().includes(value)
+?''
+:'none';
 
 });
+
+}
+
+function getActionForModule(title){
+
+const actions={
+'Find Jobs':'Apply Now',
+'My Applications':'Application Details',
+'Interviews':'Schedule Interview',
+'Notifications':'Notification Settings',
+'Company Profile':'Edit Company Profile',
+'Manage Jobs':'Post New Job',
+'Applicants':'Applicant Review',
+'Students':'Student Management',
+'Companies':'Company Management',
+'Jobs':'Post New Job',
+'Applications':'Application Management',
+'Reports':'Generate Report'
+};
+
+return actions[title]||title;
+
+}
+
+function showModuleToast(text){
+
+document.getElementById('moduleToast')?.remove();
+
+document.body.insertAdjacentHTML(
+'beforeend',
+`
+<div id="moduleToast" class="toast">
+✓ ${text}
+</div>
+`
+);
+
+setTimeout(()=>{
+document.getElementById('moduleToast')?.remove();
+},1800);
+
+}
+
+/* STUDENT PROFILE */
+
+function renderStudentProfile(){
+
+document.getElementById('dashTitle').textContent='My Profile';
+
+document.getElementById('dashSubtitle').textContent=
+'Manage your personal, academic and placement profile.';
+
+document.getElementById('dashContent').innerHTML=`
+
+<div class="profileHeader" style="margin-top:30px">
+
+<div>
+
+<h2 style="margin:0">
+Profile Management
+</h2>
+
+<p style="color:var(--muted)">
+Keep your placement profile updated.
+</p>
+
+</div>
+
+<button
+class="btn primary"
+onclick="showActionMessage('Edit Profile')">
+
++ Add / Manage
+
+</button>
+
+</div>
+
+<div class="profileCards">
+
+${profileCard(
+'👤',
+'Personal Information',
+'Name, email, phone, address and date of birth.',
+'Personal Information'
+)}
+
+${profileCard(
+'🎓',
+'Academic Details',
+'Course, department, semester, CGPA and graduation year.',
+'Academic Details'
+)}
+
+${profileCard(
+'💻',
+'Skills',
+'Technical skills, programming languages and tools.',
+'Skills'
+)}
+
+${profileCard(
+'🌐',
+'Social Profiles',
+'LinkedIn, GitHub and portfolio links.',
+'Social Profiles'
+)}
+
+${profileCard(
+'📄',
+'Resume',
+'Upload and manage your latest resume.',
+'Resume'
+)}
+
+${profileCard(
+'✏️',
+'Edit Profile',
+'Update your profile information anytime.',
+'Edit Profile'
+)}
+
+</div>
+
+<div class="dashCard" style="margin-top:20px">
+
+<h2 style="margin-top:0">
+Profile Overview
+</h2>
+
+<div
+style="
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:12px;
+margin-top:20px">
+
+<div style="padding:18px;background:var(--soft);border-radius:15px">
+
+<b>Profile Status</b>
+
+<small style="display:block;color:var(--muted);margin-top:6px">
+85% Complete
+</small>
+
+</div>
+
+<div style="padding:18px;background:var(--soft);border-radius:15px">
+
+<b>Resume</b>
+
+<small style="display:block;color:var(--muted);margin-top:6px">
+Ready to upload
+</small>
+
+</div>
+
+<div style="padding:18px;background:var(--soft);border-radius:15px">
+
+<b>Placement Status</b>
+
+<small style="display:block;color:var(--muted);margin-top:6px">
+Active
+</small>
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+}
+
+function profileCard(icon,title,description,action){
+
+return `
+
+<div class="profileCard">
+
+<div class="profileIcon">${icon}</div>
+
+<h3>${title}</h3>
+
+<p>${description}</p>
+
+<button onclick="showActionMessage('${action}')">
+
+Open ${title} →
+
+</button>
+
+</div>
+
+`;
+
+}
+
+/* ACTION MODALS */
+
+function showActionMessage(title){
+
+document.getElementById('featureModal')?.remove();
+
+const pages={
+
+"Personal Information":{
+icon:"👤",
+title:"Personal Information",
+fields:[
+["Full Name","text","Enter your full name"],
+["Email Address","email","Enter your email"],
+["Phone Number","tel","Enter phone number"],
+["Address","text","Enter your address"],
+["Date of Birth","date",""]
+]
+},
+
+"Academic Details":{
+icon:"🎓",
+title:"Academic Details",
+fields:[
+["Course","text","e.g. Diploma in AI & ML"],
+["Department","text","Enter department"],
+["Semester","text","Enter current semester"],
+["CGPA","number","Enter CGPA"],
+["Graduation Year","number","2027"]
+]
+},
+
+"Skills":{
+icon:"💻",
+title:"Skills",
+fields:[
+["Programming Languages","text","HTML, CSS, JavaScript..."],
+["Technical Skills","text","Enter technical skills"],
+["Tools","text","Git, GitHub, VS Code..."],
+["Certifications","text","Enter certifications"]
+]
+},
+
+"Social Profiles":{
+icon:"🌐",
+title:"Social Profiles",
+fields:[
+["LinkedIn URL","url","https://linkedin.com/in/..."],
+["GitHub URL","url","https://github.com/..."],
+["Portfolio URL","url","https://..."]
+]
+},
+
+"Resume":{
+icon:"📄",
+title:"Resume Management",
+fields:[
+["Resume Title","text","My Placement Resume"],
+["Resume Link","url","Paste resume link"]
+]
+},
+
+"Edit Profile":{
+icon:"✏️",
+title:"Edit Profile",
+fields:[
+["Full Name","text","Enter full name"],
+["Email","email","Enter email"],
+["Phone Number","tel","Enter phone"],
+["Course","text","Enter course"],
+["Department","text","Enter department"],
+["CGPA","number","Enter CGPA"]
+]
+},
+
+"Upload Resume":{
+icon:"📄",
+title:"Upload Resume",
+fields:[
+["Resume Name","text","My Resume"],
+["Resume Link","url","Paste Google Drive / resume link"]
+]
+},
+
+"Apply Now":{
+icon:"📨",
+title:"Apply for Job",
+fields:[
+["Job Position","text","Enter job position"],
+["Company","text","Enter company name"],
+["Resume Link","url","Paste your resume link"]
+]
+},
+
+"Schedule Interview":{
+icon:"🗓️",
+title:"Schedule Interview",
+fields:[
+["Candidate Name","text","Enter candidate name"],
+["Interview Date","date",""],
+["Interview Time","time",""],
+["Interview Type","text","Technical / HR / Final"],
+["Venue / Meeting Link","text","Enter venue or meeting link"]
+]
+},
+
+"Post New Job":{
+icon:"💼",
+title:"Post New Job",
+fields:[
+["Job Title","text","Software Developer"],
+["Company","text","Company name"],
+["Location","text","Pune / Mumbai / Remote"],
+["Salary","text","₹4 LPA"],
+["Eligibility","text","CGPA / Branch"],
+["Application Deadline","date",""]
+]
+},
+
+"Edit Company Profile":{
+icon:"🏢",
+title:"Edit Company Profile",
+fields:[
+["Company Name","text","Enter company name"],
+["Industry","text","Information Technology"],
+["Website","url","https://..."],
+["Location","text","Pune / Mumbai"],
+["Recruiter Email","email","recruiter@example.com"]
+]
+},
+
+"Applicant Review":{
+icon:"👥",
+title:"Applicant Review",
+fields:[
+["Candidate Name","text","Enter candidate name"],
+["Job Position","text","Enter job position"],
+["Status","text","Shortlisted / Selected / Rejected"],
+["Remarks","text","Enter remarks"]
+]
+},
+
+"Student Management":{
+icon:"🎓",
+title:"Student Management",
+fields:[
+["Student Name","text","Enter student name"],
+["Department","text","Enter department"],
+["CGPA","number","Enter CGPA"],
+["Placement Status","text","Eligible / Placed / Pending"]
+]
+},
+
+"Company Management":{
+icon:"🏢",
+title:"Company Management",
+fields:[
+["Company Name","text","Enter company name"],
+["Industry","text","Enter industry"],
+["Verification Status","text","Verified / Pending"],
+["Recruiter Email","email","Enter recruiter email"]
+]
+},
+
+"Application Management":{
+icon:"📋",
+title:"Application Management",
+fields:[
+["Student Name","text","Enter student name"],
+["Company","text","Enter company"],
+["Job Position","text","Enter position"],
+["Status","text","Under Review / Shortlisted / Selected"]
+]
+},
+
+"Generate Report":{
+icon:"📊",
+title:"Generate Placement Report",
+fields:[
+["Report Name","text","Placement Report"],
+["Academic Year","text","2026-27"],
+["Department","text","All Departments"],
+["Report Type","text","Placement / Company / Student"]
+]
+},
+
+"Application Details":{
+icon:"📋",
+title:"Application Details",
+fields:[
+["Company","text","Company name"],
+["Job Position","text","Job position"],
+["Application Status","text","Current status"],
+["Remarks","text","Additional remarks"]
+]
+},
+
+"Notification Settings":{
+icon:"🔔",
+title:"Notification Settings",
+fields:[
+["Email Notifications","text","Enabled / Disabled"],
+["Interview Alerts","text","Enabled / Disabled"],
+["Job Alerts","text","Enabled / Disabled"]
+]
+},
+
+"Notification Settings":{
+icon:"🔔",
+title:"Notification Settings",
+fields:[
+["Email Notifications","text","Enabled / Disabled"],
+["Interview Alerts","text","Enabled / Disabled"],
+["Job Alerts","text","Enabled / Disabled"]
+]
+}
+
+};
+
+const page=pages[title]||{
+icon:"📋",
+title:title,
+fields:[]
+};
+
+const formFields=page.fields.length
+?
+page.fields.map(f=>`
+
+<div style="margin-bottom:13px">
+
+<label style="
+display:block;
+font-size:12px;
+font-weight:800;
+margin-bottom:6px">
+
+${f[0]}
+
+</label>
+
+<input
+class="field featureInput"
+type="${f[1]}"
+placeholder="${f[2]}"
+${f[1]==='number'?'step="0.01"':''}>
+
+</div>
+
+`).join('')
+:
+`
+<div
+style="
+padding:25px;
+background:var(--soft);
+border-radius:15px;
+text-align:center">
+
+<div style="font-size:40px">
+${page.icon}
+</div>
+
+<p style="color:var(--muted)">
+This section is ready to manage your ${title.toLowerCase()}.
+</p>
+
+</div>
+`;
+
+document.body.insertAdjacentHTML(
+'beforeend',
+`
+
+<div class="modal" id="featureModal">
+
+<div class="modalBox" style="width:min(560px,100%)">
+
+<div class="modalHead">
+
+<div>
+
+<div style="font-size:35px;margin-bottom:5px">
+${page.icon}
+</div>
+
+<span class="eyebrow">
+CampusConnect
+</span>
+
+<h2 style="margin:5px 0">
+${page.title}
+</h2>
+
+<p style="color:var(--muted);font-size:13px;margin-top:5px">
+Manage your ${title.toLowerCase()} details.
+</p>
+
+</div>
+
+<button
+class="close"
+onclick="document.getElementById('featureModal').remove()">
+
+×
+
+</button>
+
+</div>
+
+<form
+onsubmit="saveFeature(event,'${title.replace(/'/g,"\\'")}')"
+style="margin-top:20px">
+
+${formFields}
+
+<div
+style="
+display:flex;
+gap:10px;
+margin-top:20px">
+
+<button
+type="button"
+class="btn outline"
+style="flex:1"
+onclick="document.getElementById('featureModal').remove()">
+
+Cancel
+
+</button>
+
+<button
+type="submit"
+class="btn primary"
+style="flex:1">
+
+Save Changes
+
+</button>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+`
+);
+
+}
+
+/* SAVE */
+
+async function saveFeature(event,title){
+
+event.preventDefault();
+
+const inputs=event.target.querySelectorAll('.featureInput');
+
+const data={};
+
+inputs.forEach((input,index)=>{
+data["field"+index]=input.value;
+});
+
+try{
+
+if(
+window.CampusFirebase &&
+window.CampusFirebase.auth.currentUser
+){
+
+const uid=window.CampusFirebase.auth.currentUser.uid;
+
+await window.CampusFirebase.setDoc(
+
+window.CampusFirebase.doc(
+window.CampusFirebase.db,
+'profiles',
+uid
+),
+
+{
+[title]:data,
+updatedAt:window.CampusFirebase.serverTimestamp()
+},
+
+{merge:true}
+
+);
+
+}
+
+}catch(error){
+
+console.log('Firestore save error:',error);
+
+}
+
+document.getElementById('featureModal')?.remove();
+
+document.body.insertAdjacentHTML(
+'beforeend',
+`
+
+<div id="saveToast" class="toast">
+✓ ${title} saved successfully
+</div>
+
+`
+);
+
+setTimeout(()=>{
+
+document.getElementById('saveToast')?.remove();
+
+},2500);
+
+}
+
+/* LOGOUT */
+
+async function logoutUser(){
+
+try{
+
+if(window.CampusFirebase){
+
+await window.CampusFirebase.signOut(
+window.CampusFirebase.auth
+);
+
+}
+
+}catch(e){
+
+console.error(e);
+
+}
+
+currentUser=null;
+currentRole=null;
+
+goHome();
+
+}
+
+/* ESCAPE */
+
+function escapeHtml(v){
+
+return String(v).replace(
+/[&<>"']/g,
+function(m){
+
+return {
+'&':'&amp;',
+'<':'&lt;',
+'>':'&gt;',
+'"':'&quot;',
+"'":'&#39;'
+}[m];
+
+}
+);
+
+}
+
+/* HOME */
+
+function goHome(){
+
+render();
+
+window.scrollTo(0,0);
+
+}
+
+/* RENDER */
+
+function render(){
+
+root.innerHTML=home();
+
+}
+
+/* GLOBAL */
+
+window.openAuth=openAuth;
+window.closeAuth=closeAuth;
+window.handleAuth=handleAuth;
+window.forgotPassword=forgotPassword;
+window.toggle=toggle;
+window.logoutUser=logoutUser;
+window.goHome=goHome;
+window.dashboardAction=dashboardAction;
+window.showActionMessage=showActionMessage;
+window.saveFeature=saveFeature;
+window.filterModuleTable=filterModuleTable;
+window.showModuleToast=showModuleToast;
+window.getMenuIndex=getMenuIndex;
+
+/* FIREBASE AUTH STATE */
+
+setTimeout(()=>{
+
+if(window.CampusFirebase){
+
+window.CampusFirebase.onAuthStateChanged(
+window.CampusFirebase.auth,
+async user=>{
+
+if(user){
+currentUser=user;
+}
+
+}
+);
+
+}
+
+},500);
+
+/* START */
+
+render();
 
 </script>
 
 </body>
-
 </html>
